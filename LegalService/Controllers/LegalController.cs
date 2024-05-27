@@ -13,6 +13,7 @@ using VaultSharp.V1.AuthMethods.Token;
 using VaultSharp.V1.AuthMethods;
 using VaultSharp.V1.Commons;
 using System.Net.Http.Formatting;
+using System.Text.Json;
 
 
 namespace Controllers
@@ -60,8 +61,10 @@ namespace Controllers
             {
                 return NotFound(new { error = "Auctions not found" });
             }
+            // pga. httpclient bliver reponse lidt anderledes end normalt, derfor skal vi bruge ReadAsStringAsync() for at få indholdet
+            var auctionContent = await auctions.Content.ReadAsStringAsync();
 
-            return Ok(auctions);
+            return Ok(auctionContent);
         }
 
         //Til test
