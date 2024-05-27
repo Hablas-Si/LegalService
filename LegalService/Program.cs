@@ -1,10 +1,12 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Models;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
+using Repositories;
 using VaultSharp;
 using VaultSharp.V1.AuthMethods.Token;
 using VaultSharp.V1.AuthMethods;
@@ -15,7 +17,8 @@ using NLog;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Microsoft.Extensions.DependencyInjection;
-using Repositories;
+using Microsoft.AspNetCore.DataProtection.Repositories;
+using Respository;
 
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings()
@@ -69,6 +72,23 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddSingleton<IVaultService>(vaultService);
 // Add services to the container.
 
+
+// Konfigurer HttpClient for UserService udfra environment variablen UserServiceUrl
+var userServiceUrl = Environment.GetEnvironmentVariable("UserServiceUrl");
+if (string.IsNullOrEmpty(userServiceUrl))
+{
+    logger.Error("UserServiceUrl is missing");
+    throw new ApplicationException("UserServiceUrl is missing");
+}
+else
+{
+    logger.Info("UserServiceUrl is: " + userServiceUrl);
+}
+builder.Services.AddHttpClient<IUserRepository, UserRepository>(client =>
+{
+    client.BaseAddress = new Uri(userServiceUrl);
+});
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -84,6 +104,8 @@ app.UseSwaggerUI();
 // }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
