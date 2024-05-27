@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalService", "LegalService\LegalService.csproj", "{A4FC7C9F-FF8B-4984-8F69-FC679A875460}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalService", "LegalService\LegalService.csproj", "{C7E8A86B-9B2B-427E-A95E-9FBFA1E54D47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +14,9 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A4FC7C9F-FF8B-4984-8F69-FC679A875460}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A4FC7C9F-FF8B-4984-8F69-FC679A875460}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A4FC7C9F-FF8B-4984-8F69-FC679A875460}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4FC7C9F-FF8B-4984-8F69-FC679A875460}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7E8A86B-9B2B-427E-A95E-9FBFA1E54D47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7E8A86B-9B2B-427E-A95E-9FBFA1E54D47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7E8A86B-9B2B-427E-A95E-9FBFA1E54D47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7E8A86B-9B2B-427E-A95E-9FBFA1E54D47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -33,6 +33,8 @@ builder.Host.UseNLog();
 // BsonSeralizer... fortæller at hver gang den ser en Guid i alle entiteter skal den serializeres til en string. 
 BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
 
+
+
 // Fetch secrets from Vault. Jeg initierer vaultService og bruger metoden derinde GetSecretAsync
 var vaultService = new VaultService(logger, builder.Configuration);
 var mySecret = await vaultService.GetSecretAsync("Secret");
@@ -75,19 +77,30 @@ builder.Services.AddSingleton<IVaultService>(vaultService);
 
 // Konfigurer HttpClient for UserService udfra environment variablen UserServiceUrl
 var userServiceUrl = Environment.GetEnvironmentVariable("UserServiceUrl");
-if (string.IsNullOrEmpty(userServiceUrl))
+var auctionServiceUrl = Environment.GetEnvironmentVariable("AuctionServiceUrl");
+if (string.IsNullOrEmpty(userServiceUrl) || string.IsNullOrEmpty(auctionServiceUrl))
 {
-    logger.Error("UserServiceUrl is missing");
-    throw new ApplicationException("UserServiceUrl is missing");
+    logger.Error("En af services er missing");
+    logger.Info("UserServiceUrl is: " + userServiceUrl);
+    logger.Info("AuctionServiceUrl is: " + auctionServiceUrl);
 }
 else
 {
     logger.Info("UserServiceUrl is: " + userServiceUrl);
+    logger.Info("AuctionServiceUrl is: " + auctionServiceUrl);
 }
+// Konfigurer HttpClient for UserService
 builder.Services.AddHttpClient<IUserRepository, UserRepository>(client =>
 {
     client.BaseAddress = new Uri(userServiceUrl);
 });
+// Konfigurer HttpClient for AuctionService
+builder.Services.AddHttpClient<IAuctionRespository, AuctionRepository>(client =>
+{
+    client.BaseAddress = new Uri(auctionServiceUrl);
+});
+
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -25,24 +25,44 @@ namespace Controllers
         private readonly IConfiguration _config;
         private readonly IVaultService _vaultService;
         private readonly IUserRepository _UserService;
+        private readonly IAuctionRespository _AuctionService;
         private readonly HttpClient _httpClient;
 
-        public AuthManagerController(ILogger<AuthManagerController> logger, IConfiguration config, IVaultService vaultService, IUserRepository userRepository, HttpClient httpClient)
+        public AuthManagerController(ILogger<AuthManagerController> logger, IConfiguration config, IVaultService vaultService, IUserRepository userRepository, IAuctionRespository auctionRespository, HttpClient httpClient)
         {
             _config = config;
             _logger = logger;
             _vaultService = vaultService;
             _UserService = userRepository;
+            _AuctionService = auctionRespository;
             _httpClient = httpClient;
         }
 
         [HttpGet("users/{userId}"), Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetUser(Guid userId)
         {
-            var response = await _UserService.GetUserAsync(userId);
-            return Ok(response);
+            var user = await _UserService.GetUserAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound(new { error = "User not found" });
+            }
+
+            return Ok(user);
         }
 
+        [HttpGet("auctions"), Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllAuctions()
+        {
+            var auctions = await _AuctionService.GetAllAuctionsAsync();
+
+            if (auctions == null)
+            {
+                return NotFound(new { error = "Auctions not found" });
+            }
+
+            return Ok(auctions);
+        }
 
         //Til test
         [HttpGet("authorized"), Authorize(Roles = "Admin")]
