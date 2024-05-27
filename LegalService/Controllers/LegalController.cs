@@ -48,8 +48,9 @@ namespace Controllers
             {
                 return NotFound(new { error = "User not found" });
             }
+            var UserContent = await user.Content.ReadAsStringAsync();
 
-            return Ok(user);
+            return Ok(UserContent);
         }
 
         [HttpGet("auctions"), Authorize(Roles = "Admin")]
