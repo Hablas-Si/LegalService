@@ -39,7 +39,7 @@ namespace Controllers
             _httpClient = httpClient;
         }
 
-        [HttpGet("users/{userId}"), Authorize(Roles = "Admin")]
+        [HttpGet("users/{userId}"), Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> GetUser(Guid userId)
         {
             var user = await _UserService.GetUserAsync(userId);
@@ -53,7 +53,7 @@ namespace Controllers
             return Ok(UserContent);
         }
 
-        [HttpGet("auctions"), Authorize(Roles = "Admin")]
+        [HttpGet("auctions"), Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> GetAllAuctions()
         {
             var auctions = await _AuctionService.GetAllAuctionsAsync();
@@ -68,6 +68,20 @@ namespace Controllers
             return Ok(auctionContent);
         }
 
+        [HttpGet("auctions/{auctionId}"), Authorize(Roles = "Admin, User")]
+        public async Task<IActionResult> GetAuction(Guid auctionId)
+        {
+            var auction = await _AuctionService.GetAuctionAsync(auctionId);
+
+            if (auction == null)
+            {
+                return NotFound(new { error = "Auction ikkd fundet" });
+            }
+            // pga. httpclient bliver reponse lidt anderledes end normalt, derfor skal vi bruge ReadAsStringAsync() for at få indholdet
+            var auctionContent = await auction.Content.ReadAsStringAsync();
+
+            return Ok(auctionContent);
+        }
 
         //Til test
         [HttpGet("authorized"), Authorize(Roles = "Admin")]
