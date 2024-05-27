@@ -19,16 +19,16 @@ namespace Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthManagerController : ControllerBase
+    public class LegalController : ControllerBase
     {
-        private readonly ILogger<AuthManagerController> _logger;
+        private readonly ILogger<LegalController> _logger;
         private readonly IConfiguration _config;
         private readonly IVaultService _vaultService;
         private readonly IUserRepository _UserService;
         private readonly IAuctionRespository _AuctionService;
         private readonly HttpClient _httpClient;
 
-        public AuthManagerController(ILogger<AuthManagerController> logger, IConfiguration config, IVaultService vaultService, IUserRepository userRepository, IAuctionRespository auctionRespository, HttpClient httpClient)
+        public LegalController(ILogger<LegalController> logger, IConfiguration config, IVaultService vaultService, IUserRepository userRepository, IAuctionRespository auctionRespository, HttpClient httpClient)
         {
             _config = config;
             _logger = logger;
