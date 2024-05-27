@@ -65,6 +65,7 @@ namespace Controllers
         }
 
         //Til test
+
         [HttpGet("authorized"), Authorize(Roles = "Admin")]
         public IActionResult Authorized()
         {

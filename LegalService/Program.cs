@@ -86,6 +86,8 @@ if (string.IsNullOrEmpty(userServiceUrl) || string.IsNullOrEmpty(auctionServiceU
 }
 else
 {
+    Console.WriteLine("UserServiceUrl is: " + userServiceUrl);
+    Console.WriteLine("AuctionServiceUrl is: " + auctionServiceUrl);
     logger.Info("UserServiceUrl is: " + userServiceUrl);
     logger.Info("AuctionServiceUrl is: " + auctionServiceUrl);
 }
