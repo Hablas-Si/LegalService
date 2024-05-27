@@ -68,8 +68,8 @@ namespace Controllers
             return Ok(auctionContent);
         }
 
-        //Til test
 
+        //Til test
         [HttpGet("authorized"), Authorize(Roles = "Admin")]
         public IActionResult Authorized()
         {
