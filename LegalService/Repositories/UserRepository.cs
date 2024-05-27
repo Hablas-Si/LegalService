@@ -23,6 +23,7 @@ namespace Respository
 
         public async Task<HttpResponseMessage> GetUserAsync(Guid userId)
         {
+            // gemmer token til kald på auctionservice (kræver rolle på auctionservice)
             var token = _httpContextAccessor.HttpContext.Request.Headers["Authorization"].ToString();
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.Replace("Bearer ", ""));
 
