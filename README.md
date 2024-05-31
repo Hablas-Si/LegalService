@@ -45,9 +45,9 @@ Henter detaljer om en specifik bruger.
 
 ## Auth Endpoints
 
-### POST /api/legal/login
+### POST /api/AuthService/login
 
-Brugerlogin og JWT-token generering.
+Brugerlogin og JWT-token generering af en user token.
 
 **Body-indhold:**
 ```json
